@@ -58,13 +58,17 @@ const App = () => {
   const [j, setJ] = useState(0)
   const renderCount = useRef(0)
   const WPM = useRef(0)
+  const nextEngText = useRef('')
+
+  console.log(nextEngText.current)
 
   const updateText = () => {
-    eng
-      ? axios
-          .get('https://uselessfacts.jsph.pl/random.json?language=en')
-          .then((response) => setText(response.data.text))
-      : setText(ruData[Math.floor(Math.random() * ruData.length)])
+    if (eng) {
+      setText(nextEngText.current)
+      axios
+        .get('https://uselessfacts.jsph.pl/random.json?language=en')
+        .then((response) => (nextEngText.current = response.data.text))
+    } else setText(ruData[Math.floor(Math.random() * ruData.length)])
   }
   const textToArray = (text) => {
     let array = text.split(' ').map((x) => x.concat(' '))
@@ -124,7 +128,13 @@ const App = () => {
   }, [info])
 
   useEffect(() => {
+    axios
+      .get('https://uselessfacts.jsph.pl/random.json?language=en')
+      .then((response) => (nextEngText.current = response.data.text))
+  }, [])
+  useEffect(() => {
     if (renderCount.current) updateText()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eng])
 
@@ -176,7 +186,7 @@ const App = () => {
             <div className="ui  relaxed two column internally celled  grid">
               <Stats
                 text={
-                  cur <= 1
+                  cur <= 0.5
                     ? 0
                     : fin
                     ? Math.round((list.join().length * 10) / cur)
