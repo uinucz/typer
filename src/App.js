@@ -132,52 +132,65 @@ const App = () => {
   })
 
   return (
-    <div className="center-screen " style={{ background: '#d2eef7' }}>
-      <div className="ui text container fixed">
-        <h1 className="ui center aligned header">Typer</h1>
+    <div
+      className="center-screen "
+      style={{ background: '#d2eef7', position: 'relative', height: '100%' }}
+    >
+      <div
+        className="ui text container fixed"
+        style={{ position: 'absolute', top: '20%' }}
+      >
+        <div style={{}}>
+          <h1 className="ui center aligned header">Typer</h1>
 
-        <div>
-          <Button
-            onClickFunction={handleReset}
-            text={'Try again'}
-            colour={'  blue  '}
-          />
-          <Button
-            onClickFunction={() => {
-              handleReset()
-              updateText()
-            }}
-            text={'Next'}
-            colour={' violet'}
-          />
-
-          <Button
-            onClickFunction={() => {
-              handleReset()
-              setEng(!eng)
-            }}
-            text={!eng ? <i className="uk flag" /> : <i className="ru flag" />}
-            colour={'  green  '}
-          />
-        </div>
-
-        <div className="ui segment">
-          <div className="ui  relaxed two column internally celled  grid">
-            <Stats
-              text={
-                cur === 0 || read.length === 0
-                  ? 0
-                  : fin
-                  ? Math.round((list.join().length * 10) / cur)
-                  : Math.round(((read.join() + info).length * 10) / cur)
-              }
-              label={'wpm'}
-              size={'tiny'}
+          <div>
+            <Button
+              onClickFunction={handleReset}
+              text={'Try again'}
+              colour={'  blue  '}
             />
-            <Stats text={Number(cur).toFixed(1)} label={'sec'} size={'tiny'} />
+            <Button
+              onClickFunction={() => {
+                handleReset()
+                updateText()
+              }}
+              text={'Next'}
+              colour={' violet'}
+            />
+
+            <Button
+              onClickFunction={() => {
+                handleReset()
+                setEng(!eng)
+              }}
+              text={
+                !eng ? <i className="uk flag" /> : <i className="ru flag" />
+              }
+              colour={'  green  '}
+            />
+          </div>
+
+          <div className="ui segment">
+            <div className="ui  relaxed two column internally celled  grid">
+              <Stats
+                text={
+                  cur === 0 || read.length === 0
+                    ? 0
+                    : fin
+                    ? Math.round((list.join().length * 10) / cur)
+                    : Math.round(((read.join() + info).length * 10) / cur)
+                }
+                label={'wpm'}
+                size={'tiny'}
+              />
+              <Stats
+                text={Number(cur).toFixed(1)}
+                label={'sec'}
+                size={'tiny'}
+              />
+            </div>
           </div>
         </div>
-
         <Main
           left={left}
           read={read}
