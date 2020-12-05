@@ -8,7 +8,7 @@ const Main = ({ left, read, word, wordR, incorrectLength }) => {
   const incorrectUnderline = {
     // textDecoration: 'underline',
     // textDecorationColor: 'red',
-    background: '#FFEBEB',
+    background: '#ffb5eb',
   }
   const newFont = {
     fontFamily: 'Roboto',

@@ -132,22 +132,19 @@ const App = () => {
   })
 
   return (
-    <div
-      className="center-screen "
-      style={{ background: '#d2eef7', position: 'relative', height: '100%' }}
-    >
+    <div className="center-screen " style={{}}>
       <div
         className="ui text container fixed"
         style={{ position: 'absolute', top: '20%' }}
       >
-        <div style={{}}>
+        <div>
           <h1 className="ui center aligned header">Typer</h1>
 
           <div>
             <Button
               onClickFunction={handleReset}
               text={'Try again'}
-              colour={'  blue  '}
+              colour={'inverted  blue  '}
             />
             <Button
               onClickFunction={() => {
@@ -155,7 +152,7 @@ const App = () => {
                 updateText()
               }}
               text={'Next'}
-              colour={' violet'}
+              colour={'inverted violet'}
             />
 
             <Button
@@ -166,7 +163,7 @@ const App = () => {
               text={
                 !eng ? <i className="uk flag" /> : <i className="ru flag" />
               }
-              colour={'  green  '}
+              colour={'inverted purple '}
             />
           </div>
 
@@ -174,11 +171,14 @@ const App = () => {
             <div className="ui  relaxed two column internally celled  grid">
               <Stats
                 text={
-                  cur === 0 || read.length === 0
+                  cur <= 1
                     ? 0
                     : fin
                     ? Math.round((list.join().length * 10) / cur)
-                    : Math.round(((read.join() + info).length * 10) / cur)
+                    : Math.round(
+                        ((read.join() + info).length * 10) /
+                          (Math.round(cur * 4) / 4)
+                      )
                 }
                 label={'wpm'}
                 size={'tiny'}
@@ -191,6 +191,7 @@ const App = () => {
             </div>
           </div>
         </div>
+
         <Main
           left={left}
           read={read}
