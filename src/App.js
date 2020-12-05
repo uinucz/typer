@@ -57,6 +57,7 @@ const App = () => {
   const [info, setInfo] = useState('')
   const [j, setJ] = useState(0)
   const renderCount = useRef(0)
+  const WPM = useRef(0)
 
   const updateText = () => {
     eng
@@ -130,6 +131,10 @@ const App = () => {
   useEffect(() => {
     renderCount.current++
   })
+  useEffect(() => {
+    if (Math.round(cur * 10) % 5 === 0)
+      WPM.current = Math.round(((read.join() + info).length * 10) / cur)
+  })
 
   return (
     <div className="center-screen " style={{}}>
@@ -144,7 +149,7 @@ const App = () => {
             <Button
               onClickFunction={handleReset}
               text={'Try again'}
-              colour={'inverted  blue  '}
+              colour={'  blue  '}
             />
             <Button
               onClickFunction={() => {
@@ -152,7 +157,7 @@ const App = () => {
                 updateText()
               }}
               text={'Next'}
-              colour={'inverted violet'}
+              colour={' violet'}
             />
 
             <Button
@@ -163,7 +168,7 @@ const App = () => {
               text={
                 !eng ? <i className="uk flag" /> : <i className="ru flag" />
               }
-              colour={'inverted purple '}
+              colour={' purple '}
             />
           </div>
 
@@ -175,10 +180,7 @@ const App = () => {
                     ? 0
                     : fin
                     ? Math.round((list.join().length * 10) / cur)
-                    : Math.round(
-                        ((read.join() + info).length * 10) /
-                          (Math.round(cur * 4) / 4)
-                      )
+                    : WPM.current
                 }
                 label={'wpm'}
                 size={'tiny'}
