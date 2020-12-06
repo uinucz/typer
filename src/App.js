@@ -56,18 +56,16 @@ const App = () => {
   const [eng, setEng] = useState(() => true)
   const [info, setInfo] = useState('')
   const [j, setJ] = useState(0)
+  const [nextEngText, setNextEngText] = useState('')
   const renderCount = useRef(0)
   const WPM = useRef(0)
-  const nextEngText = useRef('')
-
-  console.log(nextEngText.current)
 
   const updateText = () => {
     if (eng) {
-      setText(nextEngText.current)
+      setText(nextEngText)
       axios
         .get('https://uselessfacts.jsph.pl/random.json?language=en')
-        .then((response) => (nextEngText.current = response.data.text))
+        .then((response) => setNextEngText(response.data.text))
     } else setText(ruData[Math.floor(Math.random() * ruData.length)])
   }
   const textToArray = (text) => {
@@ -111,7 +109,7 @@ const App = () => {
         stopTimer()
         setResults(
           results.concat({
-            speed: Math.round((list.join().length * 60) / cur),
+            speed: Math.round((text.length * 60) / cur),
             speedWPM: Math.round((list.join().length * 10) / cur),
             time: Number(cur).toFixed(1),
             info: text,
@@ -130,21 +128,23 @@ const App = () => {
   useEffect(() => {
     axios
       .get('https://uselessfacts.jsph.pl/random.json?language=en')
-      .then((response) => (nextEngText.current = response.data.text))
+      .then((response) => setNextEngText(response.data.text))
   }, [])
+
   useEffect(() => {
     if (renderCount.current) updateText()
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eng])
 
   useEffect(() => {
     renderCount.current++
   })
+
   useEffect(() => {
     if (Math.round(cur * 10) % 5 === 0)
       WPM.current = Math.round(((read.join() + info).length * 10) / cur)
-  })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cur])
 
   return (
     <div className="center-screen " style={{}}>
